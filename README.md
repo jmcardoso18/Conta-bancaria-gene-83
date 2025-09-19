@@ -66,7 +66,7 @@ Para executar os códigos localmente, você precisará de:
 1. Clone o repositório [Aulas Java](https://github.com/rafaelq80/aulas_java_t82) dentro da pasta do *Workspace* do Eclipse/STS
 
 ```bash
-git clone https://github.com/rafaelq80/aulas_java_t82.git
+git clone https://github.com/jmcardoso18/Conta-bancaria-gene-83.git
 ```
 
 2. **Abra o Eclipse/STS** e selecione a pasta do *Workspace* onde você clonou o repositório
@@ -100,5 +100,5 @@ Este repositório é parte de um projeto educacional, mas contribuições são s
 
 ##  Contato
 
-Desenvolvido por [**Rafael**](https://github.com/rafaelq80)
+Desenvolvido por [**Jamila M Cardoso**](https://github.com/jmcardoso18)
 Para dúvidas, sugestões ou colaborações, entre em contato via GitHub ou abra uma issue!# Conta-bancaria-gene-83
