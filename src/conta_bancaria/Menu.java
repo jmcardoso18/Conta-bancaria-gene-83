@@ -2,6 +2,7 @@ package conta_bancaria;
 
 import java.util.Scanner;
 
+import conta_bancaria.model.Conta;
 import conta_bancaria.util.Cores;
 
 public class Menu {
@@ -22,9 +23,20 @@ public class Menu {
 
 		// Instanciando classe Scanner
 		Scanner sc = new Scanner(System.in);
+		
 		// Declarando variaveis
 		int opcao = 0;
-
+		//Instanciar objetos da classe conta;
+		Conta c1 = new Conta(1,123,1,"Cintia Dourado",500000.00f);
+		Conta c2 = new Conta(2,123,2,"Rafaela Lemes",100000.00f);
+		c1.visualizar();
+		c2.visualizar();
+		c1.sacar(1000);
+		c2.depositar(1000);
+		System.out.println(c1.getSaldo());
+		System.out.println(c2.getSaldo());
+		c2.sacar(30000000);
+		/*
 		// iniciando lopping
 		while (opcao != 9) {
 
@@ -53,6 +65,7 @@ public class Menu {
 			case TRANSFERIR -> System.out.println("Opção 8");
 			case SAIR -> {
 				sobre();
+				System.exit(0);
 			}
 			default -> System.out.println(Cores.TEXT_RED_BOLD_BRIGHT + "⚠ Opção inválida! Tente novamente.");
 			}
@@ -61,7 +74,7 @@ public class Menu {
 		System.out.println(Cores.TEXT_RESET + Cores.ANSI_BLACK_BACKGROUND);
 		// Fechando scanner
 		sc.close();
-
+		*/
 	}
 
 	public static void exibirMenu() {
