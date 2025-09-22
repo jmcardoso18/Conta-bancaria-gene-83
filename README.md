@@ -1,4 +1,3 @@
-````
 # Projeto Conta Bancária - Java
 
 <br />
