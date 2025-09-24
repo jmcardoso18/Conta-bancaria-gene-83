@@ -3,6 +3,8 @@ package conta_bancaria;
 import java.util.Scanner;
 
 import conta_bancaria.model.Conta;
+import conta_bancaria.model.Conta_corrente;
+import conta_bancaria.model.Conta_poupanca;
 import conta_bancaria.util.Cores;
 
 public class Menu {
@@ -31,11 +33,37 @@ public class Menu {
 		Conta c2 = new Conta(2,123,2,"Rafaela Lemes",100000.00f);
 		c1.visualizar();
 		c2.visualizar();
+		System.out.println();
+		System.out.println("Cintia sacou 1000 reais");
 		c1.sacar(1000);
+		System.out.println("Rafaela recebeu os 1000 reais");
 		c2.depositar(1000);
-		System.out.println(c1.getSaldo());
-		System.out.println(c2.getSaldo());
+		System.out.println("Saldo atual da cintia: "+c1.getSaldo()); 
+		System.out.println("Saldo atual da Rafaela: "+c2.getSaldo());
+		System.out.println("Rafaela tentou sacar 30000000");
 		c2.sacar(30000000);
+		
+		Conta_corrente cc1 =new Conta_corrente(3,456, 1, "Thuany Silva", 1000000.00f,100000.00f);
+		cc1.visualizar();
+		
+		//sacar conta corrente
+		
+		System.out.println(cc1.sacar(20000000.00f));
+		cc1.visualizar();
+		
+		System.out.println(cc1.sacar(200.00f));
+		cc1.visualizar();
+		
+		//Depositar Conta corrente
+		cc1.depositar(200.00f);
+		cc1.visualizar();
+		
+		Conta_poupanca cp1 = new Conta_poupanca(4, 456, 2, "Ana Lemos",10000000.00f,11);
+		cp1.visualizar();
+		
+		//Criando um if para descobrir se vou adicionar um
+		
+		
 		/*
 		// iniciando lopping
 		while (opcao != 9) {
