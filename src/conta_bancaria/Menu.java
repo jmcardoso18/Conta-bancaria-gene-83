@@ -2,7 +2,6 @@ package conta_bancaria;
 
 import java.util.Scanner;
 
-import conta_bancaria.model.Conta;
 import conta_bancaria.model.Conta_corrente;
 import conta_bancaria.model.Conta_poupanca;
 import conta_bancaria.util.Cores;
@@ -28,20 +27,20 @@ public class Menu {
 		
 		// Declarando variaveis
 		int opcao = 0;
-		//Instanciar objetos da classe conta;
-		Conta c1 = new Conta(1,123,1,"Cintia Dourado",500000.00f);
-		Conta c2 = new Conta(2,123,2,"Rafaela Lemes",100000.00f);
-		c1.visualizar();
-		c2.visualizar();
-		System.out.println();
-		System.out.println("Cintia sacou 1000 reais");
-		c1.sacar(1000);
-		System.out.println("Rafaela recebeu os 1000 reais");
-		c2.depositar(1000);
-		System.out.println("Saldo atual da cintia: "+c1.getSaldo()); 
-		System.out.println("Saldo atual da Rafaela: "+c2.getSaldo());
-		System.out.println("Rafaela tentou sacar 30000000");
-		c2.sacar(30000000);
+//		//Instanciar objetos da classe conta;
+//		Conta c1 = new Conta(1,123,1,"Cintia Dourado",500000.00f);
+//		Conta c2 = new Conta(2,123,2,"Rafaela Lemes",100000.00f);
+//		c1.visualizar();
+//		c2.visualizar();
+//		System.out.println();
+//		System.out.println("Cintia sacou 1000 reais");
+//		c1.sacar(1000);
+//		System.out.println("Rafaela recebeu os 1000 reais");
+//		c2.depositar(1000);
+//		System.out.println("Saldo atual da cintia: "+c1.getSaldo()); 
+//		System.out.println("Saldo atual da Rafaela: "+c2.getSaldo());
+//		System.out.println("Rafaela tentou sacar 30000000");
+//		c2.sacar(30000000);
 		
 		Conta_corrente cc1 =new Conta_corrente(3,456, 1, "Thuany Silva", 1000000.00f,100000.00f);
 		cc1.visualizar();

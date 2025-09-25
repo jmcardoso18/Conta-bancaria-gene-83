@@ -19,6 +19,6 @@ public class Conta_poupanca extends Conta {
 	
 	public void visualizar() {
 		super.visualizar();
-		System.out.printf("Dia do aniversário: %d%n",aniversario);
+		System.out.printf("Dia do aniversário: %d%n",this.aniversario);
 	}
 }
