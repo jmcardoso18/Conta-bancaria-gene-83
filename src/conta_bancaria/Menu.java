@@ -81,7 +81,6 @@ public class Menu {
 			case ATUALIZAR_CONTA -> {
 				System.out.println("Atualizar conta");
 				atualizarConta();
-				
 				keyPress();
 				break;
 			}
@@ -259,14 +258,14 @@ public class Menu {
 			entrada = sc.nextLine();
 			titular = entrada.isEmpty() ? titular : entrada;
 			
-			System.out.printf("O saldo atual: %.f\nNovo Saldo (Pressione ENTER para manter o valor atual):",saldo);
+			System.out.printf("O saldo atual: %.2f\nNovo Saldo (Pressione ENTER para manter o valor atual):",saldo);
 			entrada=sc.nextLine();
 			saldo=entrada.isEmpty() ? saldo :Float.parseFloat(entrada);
 
 			switch (tipo) {
 			case 1 -> {
 				float limite = ((Conta_corrente)conta).getLimite();
-				System.out.printf("O saldo atual: %.f\nNovo Saldo (Pressione ENTER para manter o valor atual:)",limite);
+				System.out.printf("O saldo atual: %.2f\nNovo Saldo (Pressione ENTER para manter o valor atual:)",limite);
 				entrada=sc.nextLine();
 				limite=entrada.isEmpty() ? limite :Float.parseFloat(entrada);
 				contraController.atualizar(
@@ -274,7 +273,7 @@ public class Menu {
 			}
 			case 2 -> {
 				int aniversario = ((Conta_poupanca)conta).getAniversario();
-				System.out.printf("O saldo atual: %.f\nNovo Saldo (Pressione ENTER para manter o valor atual:)",aniversario);
+				System.out.printf("A idade atual: %d\nNova Idade (Pressione ENTER para manter o valor atual:)",aniversario);
 				entrada=sc.nextLine();
 				aniversario=entrada.isEmpty() ? aniversario : Integer.parseInt(entrada);
 				contraController.atualizar(
