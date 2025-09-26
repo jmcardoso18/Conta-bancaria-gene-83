@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import conta_bancaria.controller.ContaController;
+import conta_bancaria.model.Conta;
 import conta_bancaria.model.Conta_corrente;
 import conta_bancaria.model.Conta_poupanca;
 import conta_bancaria.util.Cores;
@@ -38,49 +39,55 @@ public class Menu {
 		while (opcao != 9) {
 
 			exibirMenu();
-			
-			//Colocar em um Loop para só sair quando usuario entrar com um valor válido 
-			boolean loop=true;
+
+			// Colocar em um Loop para só sair quando usuario entrar com um valor válido
+			boolean loop = true;
 			do {
-				
-			try {
-				opcao = sc.nextInt();
-				sc.nextLine();
-				loop=false;
-			} catch (InputMismatchException e) {
-				opcao = -1;
-				System.err.println(Cores.TEXT_RESET + "Opção inválida! Digite um número inteiro:");
-				sc.nextLine();
-			}
-			}while(loop);
+
+				try {
+					opcao = sc.nextInt();
+					sc.nextLine();
+					loop = false;
+				} catch (InputMismatchException e) {
+					opcao = -1;
+					System.err.println(Cores.TEXT_RESET + "Opção inválida! Digite um número inteiro:");
+					sc.nextLine();
+				}
+			} while (loop);
 
 			// Iniciando switch para direcionar as ações necessarias
 			switch (opcao) {
 			case CRIAR_CONTA -> {
-				System.out.println("");
+				System.out.println("Cadastrar nova conta");
+				cadastrarConta();
 
 				keyPress();
 				break;
 			}
 			case LISTAR_CONTAS -> {
-				System.out.println("Listar todas as contas!");
+				System.out.println("Listar todas as contas");
 				listarContas();
+
 				keyPress();
 				break;
 			}
 
 			case BUSCAR_CONTA -> {
-				System.out.println("Opção 3");
+				System.out.println("Procurar conta por número");
+				procurarContaPorNumero();
 				keyPress();
 				break;
 			}
 			case ATUALIZAR_CONTA -> {
-				System.out.println("Opção 4");
+				System.out.println("Atualizar conta");
+				atualizarConta();
+				
 				keyPress();
 				break;
 			}
 			case APAGAR_CONTA -> {
-				System.out.println("Opção 5");
+				System.out.println("Deletar conta");
+				deletarConta();
 				keyPress();
 				break;
 			}
@@ -115,7 +122,7 @@ public class Menu {
 		// Fechando scanner
 	}
 
-	public static void exibirMenu() {
+	private static void exibirMenu() {
 		System.out.println(Cores.TEXT_GREEN_BOLD_BRIGHT + Cores.ANSI_BLUE_BACKGROUND);
 		System.out.println("************************************************************************");
 		System.out.println("                                                                        ");
@@ -139,7 +146,7 @@ public class Menu {
 
 	}
 
-	public static void sobre() {
+	private static void sobre() {
 		System.out.println(Cores.TEXT_GREEN_BOLD_BRIGHT + Cores.ANSI_BLUE_BACKGROUND);
 		System.out.println("BANCO FLORESTAL AGRADECE PELA PREFERÊNCIA! VOLTE SEMPRE                 ");
 		System.out.println("                                                                        ");
@@ -152,17 +159,133 @@ public class Menu {
 		System.out.println("************************************************************************");
 	}
 
-	public static void keyPress() {
+	private static void keyPress() {
 		System.out.println(Cores.TEXT_RESET + "\n\nPressione Enter para continuar...");
 		sc.nextLine();
 	}
 
-	public static void criarContasTeste() {
-		contraController.cadastrar(new Conta_corrente(1, 456, 1, "Thuany Silva", 1000000.00f, 100000.00f));
-		contraController.cadastrar(new Conta_poupanca(2, 456, 2, "Rafaela Lemes", 100000.00f, 15));
+	private static void criarContasTeste() {
+		contraController.cadastrar(
+				new Conta_corrente(contraController.gerarNumero(), 456, 1, "Thuany Silva", 1000000.00f, 100000.00f));
+		contraController
+				.cadastrar(new Conta_poupanca(contraController.gerarNumero(), 456, 2, "Rafaela Lemes", 100000.00f, 15));
 	}
 
-	public static void listarContas() {
+	private static void listarContas() {
 		contraController.listasTodas();
+	}
+
+	private static void cadastrarConta() {
+		System.out.println("Digite o número da agência:");
+		int agencia = sc.nextInt();
+
+		System.out.println("Digite o nome do titular:");
+		sc.skip("\\R");
+		String titular = sc.nextLine();
+
+		System.out.println("Digite o tipo da conta (1 - CC| 2 - CP):");
+		int tipo = sc.nextInt();
+
+		System.out.println("Digite o Saldo inicial: ");
+		float saldo = sc.nextFloat();
+
+		switch (tipo) {
+		case 1 -> {
+			System.out.println("Digite o limite inicial da conta: ");
+			float limite = sc.nextFloat();
+			contraController.cadastrar(
+					new Conta_corrente(contraController.gerarNumero(), agencia, tipo, titular, saldo, limite));
+		}
+		case 2 -> {
+			System.out.println("Digite a data do aniversário: ");
+			int aniversario = sc.nextInt();
+			contraController.cadastrar(
+					new Conta_poupanca(contraController.gerarNumero(), agencia, tipo, titular, saldo, aniversario));
+		}
+		default -> System.out.println(Cores.TEXT_RED + "Tipo de conta inválida" + Cores.TEXT_RESET);
+		}
+	}
+
+	private static void procurarContaPorNumero() {
+		System.out.println("Digite o numéro da conta: ");
+		int numero = sc.nextInt();
+		sc.nextLine();
+
+		contraController.procurarPorNumero(numero);
+	}
+
+	private static void deletarConta() {
+		System.out.println("Digite o numéro da conta: ");
+		int numero=sc.nextInt();
+		sc.nextLine();
+		Conta conta = contraController.buscarNaColletion(numero);
+		if(conta != null) {
+			System.out.println("\nTem certeza que deseja excluir essa conta?(S/N):");
+		    String confirmacao = sc.nextLine();
+		
+		if(confirmacao.equalsIgnoreCase("S")) {
+			contraController.deletar(numero);
+		}else {
+			System.out.println("\nOperação cancelada!");
+		}
+		}else {
+			System.out.printf("A conta número: %d não foi encontrada!%n", numero);
+		}
+		
+	}
+	
+	private static void atualizarConta() {
+		System.out.println("Digite o numéro da conta: ");
+		int numero=sc.nextInt();
+		sc.nextLine();
+		Conta conta = contraController.buscarNaColletion(numero);
+		if(conta != null) {
+			
+			int agencia=conta.getAgencia();
+			String titular = conta.getTitular();
+			int tipo=conta.getTipo();
+			float saldo=conta.getSaldo();
+			
+			System.out.printf("A Agência atual: %d\nNova Agência (Pressione ENTER para manter o valor atual):",agencia);
+			String entrada=sc.nextLine();
+			agencia=entrada.isEmpty() ? agencia:Integer.parseInt(entrada);
+			
+			
+			//System.out.printf("O titular atual: %s\nNovo Titular (Pressione ENTER para manter o valor atual):",titular);
+			//entrada=sc.nextLine();
+			//titular=entrada.isEmpty() ? titular:entrada;
+
+			System.out.printf("O nome do Titular atual: %s\nNovo Titular (Pressione ENTER para manter o valor atual): ", titular);
+			entrada = sc.nextLine();
+			titular = entrada.isEmpty() ? titular : entrada;
+			
+			System.out.printf("O saldo atual: %.f\nNovo Saldo (Pressione ENTER para manter o valor atual):",saldo);
+			entrada=sc.nextLine();
+			saldo=entrada.isEmpty() ? saldo :Float.parseFloat(entrada);
+
+			switch (tipo) {
+			case 1 -> {
+				float limite = ((Conta_corrente)conta).getLimite();
+				System.out.printf("O saldo atual: %.f\nNovo Saldo (Pressione ENTER para manter o valor atual:)",limite);
+				entrada=sc.nextLine();
+				limite=entrada.isEmpty() ? limite :Float.parseFloat(entrada);
+				contraController.atualizar(
+						new Conta_corrente(numero, agencia, tipo, titular, saldo, limite));
+			}
+			case 2 -> {
+				int aniversario = ((Conta_poupanca)conta).getAniversario();
+				System.out.printf("O saldo atual: %.f\nNovo Saldo (Pressione ENTER para manter o valor atual:)",aniversario);
+				entrada=sc.nextLine();
+				aniversario=entrada.isEmpty() ? aniversario : Integer.parseInt(entrada);
+				contraController.atualizar(
+						new Conta_poupanca(numero, agencia, tipo, titular, saldo, aniversario));
+			}
+			default -> System.out.println(Cores.TEXT_RED + "Tipo de conta inválida" + Cores.TEXT_RESET);
+			}
+			
+		}else {
+			System.out.printf("A conta número: %d não foi encontrada!%n", numero);
+		}
+		
 	}
 }
