@@ -1,13 +1,20 @@
 package conta_bancaria;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import conta_bancaria.controller.ContaController;
 import conta_bancaria.model.Conta_corrente;
 import conta_bancaria.model.Conta_poupanca;
 import conta_bancaria.util.Cores;
 
 public class Menu {
 	// Moedas = bigdecimal
+
+	// Instanciando classe Scanner
+	private static final Scanner sc = new Scanner(System.in);
+	private static final ContaController contraController = new ContaController();
+
 	// Declarando constantes para as variaveis do switch case
 
 	private static final int CRIAR_CONTA = 1;
@@ -22,86 +29,90 @@ public class Menu {
 
 	public static void main(String[] args) {
 
-		// Instanciando classe Scanner
-		Scanner sc = new Scanner(System.in);
-		
 		// Declarando variaveis
 		int opcao = 0;
-//		//Instanciar objetos da classe conta;
-//		Conta c1 = new Conta(1,123,1,"Cintia Dourado",500000.00f);
-//		Conta c2 = new Conta(2,123,2,"Rafaela Lemes",100000.00f);
-//		c1.visualizar();
-//		c2.visualizar();
-//		System.out.println();
-//		System.out.println("Cintia sacou 1000 reais");
-//		c1.sacar(1000);
-//		System.out.println("Rafaela recebeu os 1000 reais");
-//		c2.depositar(1000);
-//		System.out.println("Saldo atual da cintia: "+c1.getSaldo()); 
-//		System.out.println("Saldo atual da Rafaela: "+c2.getSaldo());
-//		System.out.println("Rafaela tentou sacar 30000000");
-//		c2.sacar(30000000);
-		
-		Conta_corrente cc1 =new Conta_corrente(3,456, 1, "Thuany Silva", 1000000.00f,100000.00f);
-		cc1.visualizar();
-		
-		//sacar conta corrente
-		
-		System.out.println(cc1.sacar(20000000.00f));
-		cc1.visualizar();
-		
-		System.out.println(cc1.sacar(200.00f));
-		cc1.visualizar();
-		
-		//Depositar Conta corrente
-		cc1.depositar(200.00f);
-		cc1.visualizar();
-		
-		Conta_poupanca cp1 = new Conta_poupanca(4, 456, 2, "Ana Lemos",10000000.00f,11);
-		cp1.visualizar();
-		
-		//Criando um if para descobrir se vou adicionar um
-		
-		
-		/*
+
+		criarContasTeste();
+
 		// iniciando lopping
 		while (opcao != 9) {
 
 			exibirMenu();
-
-			// Validando a entrada de opcao para apenas inteiro
-			while (!sc.hasNextInt()) {// enquanto não for inteiro
-				System.out.println(Cores.TEXT_RED_BOLD_BRIGHT + Cores.ANSI_BLACK_BACKGROUND);
-				System.out.println("Entrada inválida! Digite apenas números inteiros.");
-				sc.next();// limpa
-				System.out.print("Entre com a opção desejada: ");
-
+			
+			//Colocar em um Loop para só sair quando usuario entrar com um valor válido 
+			boolean loop=true;
+			do {
+				
+			try {
+				opcao = sc.nextInt();
+				sc.nextLine();
+				loop=false;
+			} catch (InputMismatchException e) {
+				opcao = -1;
+				System.err.println(Cores.TEXT_RESET + "Opção inválida! Digite um número inteiro:");
+				sc.nextLine();
 			}
-			System.out.println(Cores.TEXT_GREEN_BOLD_BRIGHT + Cores.ANSI_BLUE_BACKGROUND);
-			opcao = sc.nextInt();
+			}while(loop);
 
 			// Iniciando switch para direcionar as ações necessarias
 			switch (opcao) {
-			case CRIAR_CONTA -> System.out.println("Opção 1");
-			case LISTAR_CONTAS -> System.out.println("Opção 2");
-			case BUSCAR_CONTA -> System.out.println("Opção 3");
-			case ATUALIZAR_CONTA -> System.out.println("Opção 4");
-			case APAGAR_CONTA -> System.out.println("Opção 5");
-			case SACAR -> System.out.println("Opção 6");
-			case DEPOSITAR -> System.out.println("Opção 7");
-			case TRANSFERIR -> System.out.println("Opção 8");
+			case CRIAR_CONTA -> {
+				System.out.println("");
+
+				keyPress();
+				break;
+			}
+			case LISTAR_CONTAS -> {
+				System.out.println("Listar todas as contas!");
+				listarContas();
+				keyPress();
+				break;
+			}
+
+			case BUSCAR_CONTA -> {
+				System.out.println("Opção 3");
+				keyPress();
+				break;
+			}
+			case ATUALIZAR_CONTA -> {
+				System.out.println("Opção 4");
+				keyPress();
+				break;
+			}
+			case APAGAR_CONTA -> {
+				System.out.println("Opção 5");
+				keyPress();
+				break;
+			}
+			case SACAR -> {
+				System.out.println("Opção 6");
+				keyPress();
+				break;
+			}
+			case DEPOSITAR -> {
+				System.out.println("Opção 7");
+				keyPress();
+				break;
+			}
+
+			case TRANSFERIR -> {
+				System.out.println("Opção 8");
+				keyPress();
+				break;
+			}
 			case SAIR -> {
 				sobre();
 				System.exit(0);
+				break;
 			}
-			default -> System.out.println(Cores.TEXT_RED_BOLD_BRIGHT + "⚠ Opção inválida! Tente novamente.");
+			default -> {
+				System.out.println(Cores.TEXT_RED_BOLD_BRIGHT + "⚠ Opção inválida! Tente novamente.");
+			}
 			}
 
 		}
 		System.out.println(Cores.TEXT_RESET + Cores.ANSI_BLACK_BACKGROUND);
 		// Fechando scanner
-		sc.close();
-		*/
 	}
 
 	public static void exibirMenu() {
@@ -130,7 +141,7 @@ public class Menu {
 
 	public static void sobre() {
 		System.out.println(Cores.TEXT_GREEN_BOLD_BRIGHT + Cores.ANSI_BLUE_BACKGROUND);
-		System.out.println("Banco Florestal agradece pela preferência! Volte sempre                 ");
+		System.out.println("BANCO FLORESTAL AGRADECE PELA PREFERÊNCIA! VOLTE SEMPRE                 ");
 		System.out.println("                                                                        ");
 		System.out.println("************************************************************************");
 		System.out.println("                          BANCO FLORESTAL                               ");
@@ -141,4 +152,17 @@ public class Menu {
 		System.out.println("************************************************************************");
 	}
 
+	public static void keyPress() {
+		System.out.println(Cores.TEXT_RESET + "\n\nPressione Enter para continuar...");
+		sc.nextLine();
+	}
+
+	public static void criarContasTeste() {
+		contraController.cadastrar(new Conta_corrente(1, 456, 1, "Thuany Silva", 1000000.00f, 100000.00f));
+		contraController.cadastrar(new Conta_poupanca(2, 456, 2, "Rafaela Lemes", 100000.00f, 15));
+	}
+
+	public static void listarContas() {
+		contraController.listasTodas();
+	}
 }
